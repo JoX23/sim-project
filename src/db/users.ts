@@ -1,22 +1,37 @@
 // Stub DB — in-memory para sim.
-const DB = new Map<string, { email: string; name: string; createdAt: string; updatedAt: string }>([
-  ['ada@example.com', { email: 'ada@example.com', name: 'Ada', createdAt: '2026-05-27T00:00:00.000Z', updatedAt: '2026-05-27T00:00:00.000Z' }],
-]);
+export type UserRole = 'user' | 'admin';
 
-export async function findUserByEmail(email: string) {
-  return DB.get(email) ?? null;
+interface User {
+  email: string;
+  name: string;
+  role: UserRole;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export async function createUser(email: string, name: string) {
-  if (DB.has(email)) throw new Error('duplicate');
+const DB = new Map<string, User>([
+  ['ada@example.com', { email: 'ada@example.com', name: 'Ada', role: 'user', createdAt: '2026-05-27T00:00:00.000Z', updatedAt: '2026-05-27T00:00:00.000Z' }],
+]);
+
+function normalize(email: string) {
+  return email.toLowerCase().trim();
+}
+
+export async function findUserByEmail(email: string) {
+  return DB.get(normalize(email)) ?? null;
+}
+
+export async function createUser(email: string, name: string, role: UserRole = 'user') {
+  const key = normalize(email);
+  if (DB.has(key)) throw new Error('duplicate');
   const now = new Date().toISOString();
-  const user = { email, name, createdAt: now, updatedAt: now };
-  DB.set(email, user);
+  const user: User = { email: key, name, role, createdAt: now, updatedAt: now };
+  DB.set(key, user);
   return user;
 }
 
 export async function deleteUser(email: string): Promise<boolean> {
-  return DB.delete(email);
+  return DB.delete(normalize(email));
 }
 
 export async function listUsers(
@@ -39,10 +54,11 @@ export async function listUsers(
 }
 
 export async function updateUser(email: string, name: string) {
-  const user = DB.get(email);
+  const key = normalize(email);
+  const user = DB.get(key);
   if (!user) return null;
   const updated = { ...user, name, updatedAt: new Date().toISOString() };
-  DB.set(email, updated);
+  DB.set(key, updated);
   return updated;
 }
 
