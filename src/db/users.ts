@@ -19,13 +19,23 @@ export async function deleteUser(email: string): Promise<boolean> {
   return DB.delete(email);
 }
 
-export async function listUsers(page: number, limit: number) {
+export async function listUsers(
+  page: number,
+  limit: number,
+  sort: 'name' | 'createdAt' = 'createdAt',
+  order: 'asc' | 'desc' = 'asc',
+) {
   const all = Array.from(DB.values());
+  all.sort((a, b) => {
+    const av = a[sort] as string;
+    const bv = b[sort] as string;
+    return order === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
   const total = all.length;
   const users = all.slice((page - 1) * limit, page * limit);
   const totalPages = Math.max(1, Math.ceil(total / limit));
   const hasNext = page < totalPages;
-  return { users, total, page, limit, totalPages, hasNext };
+  return { users, total, page, limit, totalPages, hasNext, sort, order };
 }
 
 export async function updateUser(email: string, name: string) {
