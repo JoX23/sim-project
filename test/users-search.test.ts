@@ -16,11 +16,10 @@ describe('GET /users/search', () => {
     expect(res.body.users.length).toBeGreaterThan(0);
   });
 
-  it('AC-3: empty query ?name= returns all users', async () => {
-    const all = await request(app).get('/users?limit=100').set(AUTH);
-    const search = await request(app).get('/users/search?name=').set(AUTH);
-    expect(search.status).toBe(200);
-    expect(search.body.users.length).toBe(all.body.total);
+  it('AC-3: empty query ?name= returns 400 (spec change: empty name is invalid)', async () => {
+    const res = await request(app).get('/users/search?name=').set(AUTH);
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty('error');
   });
 
   it('AC-4: missing name param → 400', async () => {
