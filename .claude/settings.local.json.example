@@ -1,0 +1,8 @@
+{
+  "_comment": "Copia este archivo a settings.local.json y personaliza. NUNCA lo commitees (está en .gitignore). Override puntual de allow/deny por máquina o por usuario.",
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "ask": []
+  }
+}

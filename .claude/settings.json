@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p .claude/commands .claude/skills/planner .claude/skills/implementer .claude/skills/reviewer .claude/skills/tester .claude/hooks memory docs/plans docs/architecture/adrs docs/runbooks docs/prompts tickets scripts benchmarks)",
+      "Bash(/Users/josemariscal/.cargo/bin/lean-ctx -c 'ls -la')",
+      "Edit(/.claude/skills/tester/**)"
+    ],
+    "additionalDirectories": [
+      "/tmp/sim-project/src",
+      "/private/tmp/sim-project/src",
+      "/tmp/sim-project/test",
+      "/private/tmp/sim-project/test"
+    ]
+  }
+}

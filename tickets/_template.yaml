@@ -1,0 +1,41 @@
+# tickets/<ULID>.yaml — un archivo por ticket (evita merge conflicts vs. yaml monolítico)
+#
+# Copia este archivo a tickets/<ULID>.yaml (genera ULID con: date -u +%s | shasum o cualquier ULID CLI)
+# y rellena los campos.
+
+id: <ULID>                              # 26 chars Crockford base32 lowercase
+title: "<Frase corta describiendo el ticket>"
+type: feature | bug | chore | docs | refactor | spike
+status: backlog | in_progress | blocked | resolved | wontfix
+priority: P0 | P1 | P2 | P3              # P0 = bloquea release, P3 = nice-to-have
+points: 1 | 2 | 3 | 5 | 8 | 13           # Fibonacci (story points)
+created_at: 2026-05-27T00:00:00Z
+updated_at: 2026-05-27T00:00:00Z
+
+# Opcional: agrupación en épico o iniciativa
+epic: <slug del épico o null>            # ej: "auth-redesign"
+sprint: <slug del sprint o null>         # ej: "2026-W22"
+
+# Linkage a plans/ADRs/PRs (se llenan al avanzar)
+related_plans: []                        # lista de ULIDs de docs/plans/
+related_adrs: []                         # lista de ADR-NNN
+related_prs: []                          # lista de URLs o números de PR
+
+# Body del ticket (markdown libre)
+description: |
+  ## Contexto
+  [Por qué este ticket existe]
+
+  ## Acceptance Criteria
+  - [ ] AC-1
+  - [ ] AC-2
+
+  ## Notas
+  [Cualquier contexto adicional]
+
+# Opcional: para bugs
+reproduction_steps:
+  - "<paso 1>"
+  - "<paso 2>"
+expected: "<comportamiento esperado>"
+actual: "<comportamiento actual>"

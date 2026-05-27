@@ -1,0 +1,1 @@
+{"name":"sim-project","version":"0.0.1","scripts":{"build":"tsc","test":"jest","lint":"eslint src","typecheck":"tsc --noEmit","format":"prettier --check src"}}

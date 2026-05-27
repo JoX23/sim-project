@@ -1,0 +1,11 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/mcp.json",
+  "mcpServers": {
+    "lean-ctx": {
+      "command": "lean-ctx",
+      "args": ["serve"],
+      "required": true,
+      "description": "Context Runtime for AI Agents. Required by this harness — see _contract.md § lean-ctx invariants. If absent, the lean-ctx skill (loaded from the user's global ~/.claude/) auto-installs."
+    }
+  }
+}

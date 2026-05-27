@@ -1,0 +1,36 @@
+node_modules/
+# Harness telemetry (F2+) — schema versioned, bodies not
+.claude/telemetry/*.jsonl
+.claude/telemetry/*.gz
+
+# Shadow-mode evolve worktrees (F3+)
+.claude/shadow/
+
+# Local-only settings (never commit secrets/personal config)
+.claude/settings.local.json
+
+# Aggregated reports (derived, not source)
+tickets/_report.md
+
+# Plan-mode session files (Claude Code internal)
+.claude/sessions/
+
+# Node / Python / generic build artifacts (when used as template seed)
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/settings.json.example
+
+# Logs and tmp
+*.log
+.tmp/
+/tmp/
