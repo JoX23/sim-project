@@ -49,6 +49,12 @@ Completa:
 
 Si no puedes reproducir → reporta y aborta. No fixees lo que no puedes ver fallar.
 
+**⚠️ Caso especial — triage vs spec change**: antes de continuar, verifica si existe un test que afirme que el comportamiento reportado como bug es **correcto e intencional**. Si es así:
+1. **Pausa. No escribas el test de regresión todavía.**
+2. Informa al usuario: "El comportamiento descrito está cubierto por `<test>` como comportamiento esperado. ¿Es un bug o un cambio de spec?"
+3. Si es **bug** (el test está mal): continúa con Paso 2 normalmente, el test existente se actualizará en write_set.
+4. Si es **spec change**: trata el intent como una feature/cambio de comportamiento — usa `/plan` en lugar de `/triage`.
+
 **→ Paso 2.**
 
 ---
