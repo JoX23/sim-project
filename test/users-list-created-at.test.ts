@@ -1,7 +1,9 @@
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { app } from '../src/server';
 
-const AUTH = { Authorization: 'Bearer sim-token-ada@example.com' };
+const SECRET = 'dev-only-not-for-prod';
+const AUTH = { Authorization: `Bearer ${jwt.sign({ sub: 'ada', email: 'ada@example.com' }, SECRET)}` };
 
 // Covers untested region from plan 01ksxspk4r2x5v7n3qz8tm6yz1k evidence:
 // "no hay test que llame listUsers y verifique el campo createdAt en los objetos"

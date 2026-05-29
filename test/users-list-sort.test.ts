@@ -1,7 +1,9 @@
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { app } from '../src/server';
 
-const AUTH = { Authorization: 'Bearer sim-token-ada@example.com' };
+const SECRET = 'dev-only-not-for-prod';
+const AUTH = { Authorization: `Bearer ${jwt.sign({ sub: 'ada', email: 'ada@example.com' }, SECRET)}` };
 
 describe('GET /users — sort/order params', () => {
   it('AC-1: ?sort=name&order=asc returns users sorted by name ascending', async () => {
