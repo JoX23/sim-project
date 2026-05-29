@@ -5,6 +5,8 @@ shipped_at: "2026-05-28T23:10:00Z"
 diff_hash: 077a8c8e754bfc3188ce4595d6802f981bcb0fb3
 reviewer_verdict: APPROVED
 ship_cycles: 2
+pr_url: https://github.com/JoX23/sim-project/pull/2
+pr_created_at: "2026-05-28T23:15:00Z"
 ---
 
 ## Checks corridos
