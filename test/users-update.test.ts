@@ -1,8 +1,10 @@
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { app } from '../src/server';
 
-const AUTH = { Authorization: 'Bearer sim-token-ada@example.com' };
-const AUTH_BOB = { Authorization: 'Bearer sim-token-bob@example.com' };
+const SECRET = 'dev-only-not-for-prod';
+const AUTH = { Authorization: `Bearer ${jwt.sign({ sub: 'ada', email: 'ada@example.com' }, SECRET)}` };
+const AUTH_BOB = { Authorization: `Bearer ${jwt.sign({ sub: 'bob', email: 'bob@example.com' }, SECRET)}` };
 
 describe('PATCH /users/:email', () => {
   it('AC-1: owner updates name → 200 with updated user', async () => {
@@ -31,7 +33,7 @@ describe('PATCH /users/:email', () => {
   it('AC-3: email not found → 404', async () => {
     const res = await request(app)
       .patch('/users/ghost@example.com')
-      .set({ Authorization: 'Bearer sim-token-ghost@example.com' })
+      .set({ Authorization: `Bearer ${jwt.sign({ sub: 'ghost', email: 'ghost@example.com' }, SECRET)}` })
       .send({ name: 'Ghost' });
     expect(res.status).toBe(404);
   });

@@ -1,7 +1,9 @@
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { app } from '../src/server';
 
-const AUTH_ADA = { Authorization: 'Bearer sim-token-ada@example.com' };
+const SECRET = 'dev-only-not-for-prod';
+const AUTH_ADA = { Authorization: `Bearer ${jwt.sign({ sub: 'ada', email: 'ada@example.com' }, SECRET)}` };
 
 describe('PATCH /users/:email — name validation', () => {
   it('name with only spaces → 400', async () => {
