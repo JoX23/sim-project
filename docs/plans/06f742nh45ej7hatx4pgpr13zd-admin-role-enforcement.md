@@ -1,7 +1,9 @@
 ---
 id: 06f742nh45ej7hatx4pgpr13zd
 parent: null
-status: draft
+status: shipped
+shipped_at: "2026-05-28T23:10:00Z"
+evidence: 06f742nh45ej7hatx4pgpr13zd.evidence.md
 intent: "Permitir a admins borrar y patchear cualquier usuario sin ownership check"
 tier: sandbox-edit
 read_set:

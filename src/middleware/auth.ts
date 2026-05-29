@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { findUserByEmail } from '../db/users';
 
 const SECRET = process.env.JWT_SECRET || 'dev-only-not-for-prod';
 
@@ -19,4 +20,10 @@ export function requireAuth(req: AuthedRequest, res: Response, next: NextFunctio
   } catch {
     return res.status(401).json({ error: 'invalid token' });
   }
+}
+
+export async function isAdmin(req: AuthedRequest): Promise<boolean> {
+  if (!req.user?.email) return false;
+  const caller = await findUserByEmail(req.user.email);
+  return caller?.role === 'admin';
 }

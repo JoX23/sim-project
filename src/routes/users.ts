@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { findUserByEmail, createUser, deleteUser, listUsers, updateUser, searchUsers } from '../db/users';
 import type { AuthedRequest } from '../middleware/auth';
+import { isAdmin } from '../middleware/auth';
 import { EMAIL_RE } from '../utils/validation';
 import { badRequest, forbidden, notFound, conflict, internalError } from '../utils/errors';
 
@@ -55,9 +56,9 @@ usersRouter.post('/', async (req, res) => {
 });
 
 usersRouter.patch('/:email', async (req: AuthedRequest, res) => {
-  const email = req.params.email;
+  const email = req.params.email as string;
   if (!EMAIL_RE.test(email)) return badRequest(res, 'invalid email format');
-  if (req.user?.email !== email) return forbidden(res);
+  if (!await isAdmin(req) && req.user?.email !== email) return forbidden(res);
   const { name } = req.body as { name?: string };
   if (!name?.trim()) return badRequest(res, 'name required');
   const updated = await updateUser(email, name.trim());
@@ -66,9 +67,9 @@ usersRouter.patch('/:email', async (req: AuthedRequest, res) => {
 });
 
 usersRouter.delete('/:email', async (req: AuthedRequest, res) => {
-  const email = req.params.email;
+  const email = req.params.email as string;
   if (!EMAIL_RE.test(email)) return badRequest(res, 'invalid email format');
-  if (req.user?.email !== email) return forbidden(res);
+  if (!await isAdmin(req) && req.user?.email !== email) return forbidden(res);
   const deleted = await deleteUser(email);
   if (!deleted) return notFound(res);
   res.status(204).send();
