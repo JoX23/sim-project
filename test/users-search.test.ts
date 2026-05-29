@@ -1,7 +1,9 @@
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { app } from '../src/server';
 
-const AUTH = { Authorization: 'Bearer sim-token-ada@example.com' };
+const SECRET = 'dev-only-not-for-prod';
+const AUTH = { Authorization: `Bearer ${jwt.sign({ sub: 'ada', email: 'ada@example.com' }, SECRET)}` };
 
 describe('GET /users/search', () => {
   it('AC-1: ?name=Ada returns matching users', async () => {
